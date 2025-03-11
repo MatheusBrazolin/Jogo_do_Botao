@@ -6,11 +6,18 @@
     <title>Jogo do Botão Fugitivo</title>
     <style>
         body {
-            text-align: center; /* Centraliza o conteúdo na tela */
+            text-align: center;
             font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #739bd8, #212564);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin: 0;
         }
         .container {
-            position: relative; /* Permite que os botões sejam posicionados dentro desse contêiner */
+            position: relative;
             width: 100vw;
             height: 100vh;
             display: flex;
@@ -18,45 +25,98 @@
             align-items: center;
         }
         button {
-            position: absolute; /* Permite que o botão "fujao" mude de posição */
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer; /* Indica que o botão é clicável */
+            position: absolute;
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.3s ease;
         }
+        #fixo {
+            background: #4CAF50;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        #fixo:hover {
+            background: #45a049;
+            transform: scale(1.1);
+        }
+        #fujao {
+            background: #ff4b5c;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .winner-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-size: 24px;
+            text-align: center;
+        }
+        .winner-screen button {
+            margin-top: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .winner-screen h3 {
+            margin-top:180px; /* Ajusta a margem superior */
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Botão fixo que pode ser clicado -->
         <button id="fixo">Clique Aqui!</button>
-        <!-- Botão que foge do mouse -->
         <button id="fujao">Tente me pegar!</button>
+    </div>
+    
+    <!-- Tela de vitória -->
+    <div class="winner-screen" id="winnerScreen">
+        <button onclick="restartGame()">Jogar novamente</button>
+        <h3>Parabéns meu amor, você venceu S2</h3>
     </div>
 
     <script>
-        // Seleciona os botões pelo ID
         const fujao = document.getElementById("fujao");
         const fixo = document.getElementById("fixo");
+        const winnerScreen = document.getElementById("winnerScreen");
 
-        // Evento que faz o botão "fujao" fugir quando o mouse se aproxima
         fujao.addEventListener("mouseover", () => {
-            // Define os limites máximos para evitar que o botão saia da tela
             const maxX = window.innerWidth - fujao.clientWidth;
             const maxY = window.innerHeight - fujao.clientHeight;
             
-            // Gera novas posições aleatórias dentro dos limites da tela
             const newX = Math.random() * maxX;
             const newY = Math.random() * maxY;
             
-            // Aplica as novas posições ao botão "fujao"
             fujao.style.left = `${newX}px`;
             fujao.style.top = `${newY}px`;
         });
 
-        // Evento que exibe um alerta quando o botão "fixo" é clicado
         fixo.addEventListener("click", () => {
-            alert("Você venceu!");
+            document.querySelector(".container").style.display = "none";
+            winnerScreen.style.display = "flex";
         });
+        
+        function restartGame() {
+            winnerScreen.style.display = "none";
+            document.querySelector(".container").style.display = "flex";
+        }
     </script>
 </body>
 </html>
