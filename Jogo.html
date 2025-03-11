@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo do Botão Fugitivo</title>
+    <style>
+        body {
+            text-align: center; /* Centraliza o conteúdo na tela */
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            position: relative; /* Permite que os botões sejam posicionados dentro desse contêiner */
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button {
+            position: absolute; /* Permite que o botão "fujao" mude de posição */
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer; /* Indica que o botão é clicável */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Botão fixo que pode ser clicado -->
+        <button id="fixo">Clique Aqui!</button>
+        <!-- Botão que foge do mouse -->
+        <button id="fujao">Tente me pegar!</button>
+    </div>
+
+    <script>
+        // Seleciona os botões pelo ID
+        const fujao = document.getElementById("fujao");
+        const fixo = document.getElementById("fixo");
+
+        // Evento que faz o botão "fujao" fugir quando o mouse se aproxima
+        fujao.addEventListener("mouseover", () => {
+            // Define os limites máximos para evitar que o botão saia da tela
+            const maxX = window.innerWidth - fujao.clientWidth;
+            const maxY = window.innerHeight - fujao.clientHeight;
+            
+            // Gera novas posições aleatórias dentro dos limites da tela
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+            
+            // Aplica as novas posições ao botão "fujao"
+            fujao.style.left = `${newX}px`;
+            fujao.style.top = `${newY}px`;
+        });
+
+        // Evento que exibe um alerta quando o botão "fixo" é clicado
+        fixo.addEventListener("click", () => {
+            alert("Você venceu!");
+        });
+    </script>
+</body>
+</html>
